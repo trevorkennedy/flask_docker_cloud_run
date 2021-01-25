@@ -1,0 +1,9 @@
+steps:
+- name: gcr.io/cloud-builders/gcloud
+  args: [ 'config', 'set', 'run/region', 'us-central1']
+  # build & push the container image
+- name: 'gcr.io/cloud-builders/docker'
+  args: [ 'build', '--tag', 'gcr.io/team-trev/flask-sample', '.' ]
+  # Deploy container image to Cloud Run
+- name: "gcr.io/cloud-builders/gcloud"
+  args: ['run', 'deploy', 'flask-sample', '--image', 'gcr.io/team-trev/flask-sample', '--platform', 'managed']
